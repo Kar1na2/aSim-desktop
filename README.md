@@ -17,9 +17,20 @@ This leads to our new segment
     - Selection of "vibes" into a template for profile boards
 
 ## **TimeLine** - This will be showing major commits made in order to build 
-### 3/21
+### **3/22**
+[e42a7d3] 
+- connecting database between backend and local dynamoDB will be changed later to support cloud database
+
+
 
 ## **Verbose** - My thought process when building this app
 - To first build this app, I need users need login information basic stuff like username and password to start
     - To get the username and password I need to setup a database
-        - The database I'm going to use is dynamoDB from my local machine first and connect to it through Rust
+        - The database I'm going to use is dynamoDB from my local machine first and connect to it through Rust ✔
+<br>
+- The user information inspiration will be taken from [TravelHelper App](https://github.com/USF-CS601-Fall25/final-project-Kar1na2) 
+    - userID 
+    - username
+    - password 
+    - usersalt
+

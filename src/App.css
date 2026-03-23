@@ -1,10 +1,3 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -13,104 +6,146 @@
 
   color: #0f0f0f;
   background-color: #f6f6f6;
+  
+  /* Make sure the body fills the whole viewport without scrollbars */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
-.container {
+body {
   margin: 0;
-  padding-top: 10vh;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-view {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
+  align-items: center;
+  padding: 2em;
+  box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
+  margin-bottom: 1.5em;
+  font-size: 1.8em;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 320px;
+  gap: 1.2em;
 }
 
 input,
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 0.8em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-}
-
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
-}
-
-input,
-button {
   outline: none;
+  box-sizing: border-box;
 }
 
-#greet-input {
-  margin-right: 5px;
+input {
+  background-color: #ffffff;
+  color: #0f0f0f;
+  transition: border-color 0.25s;
+}
+
+input:focus {
+  border-color: #646cff;
+}
+
+button[type="submit"] {
+  background-color: #646cff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  box-shadow: 0 4px 6px rgba(100, 108, 255, 0.2);
+  margin-top: 0.5em;
+}
+
+button[type="submit"]:hover {
+  background-color: #535bf2;
+}
+
+button[type="submit"]:active {
+  background-color: #434bd2;
+}
+
+.status-message {
+  margin-top: 1.5em;
+  font-weight: 500;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.toggle-container {
+  margin-top: 3em;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.toggle-container p {
+  margin: 0 0 0.5em 0;
+  color: #666;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #646cff;
+  padding: 0;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.toggle-btn:hover {
+  text-decoration: underline;
+  color: #535bf2;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
-    background-color: #2f2f2f;
+    background-color: #1a1a1a;
   }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
+  
+  input {
+    background-color: #2a2a2a;
     color: #ffffff;
-    background-color: #0f0f0f98;
+    border-color: #444;
   }
-  button:active {
-    background-color: #0f0f0f69;
+
+  .toggle-container p {
+    color: #aaa;
   }
+}
+
+.status-message.error-text {
+  color: #ff6b6b; /* Light red */
+}
+
+.status-message.success-text {
+  color: #4caf50; /* Light green */
 }

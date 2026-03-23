@@ -1,50 +1,89 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false); // Tracks if the message is an error
+  const [isLogin, setIsLogin] = useState(true);
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setIsError(false); // Reset state on new submission
+    
+    try {
+      const command = isLogin ? 'login' : 'register';
+      const response = await invoke(command, { 
+        username: username, 
+        password: password 
+      });
+      
+      setMessage(response);
+      
+    } catch (error) {
+      setIsError(true);
+      
+      // Extract the string from Tauri's serialized Rust enum { "Client": "..." }
+      let errorMsg = "An unknown error occurred";
+      if (typeof error === 'string') {
+        errorMsg = error;
+      } else if (error && error.Client) {
+        errorMsg = error.Client;
+      } else if (error && error.Internal) {
+        errorMsg = error.Internal;
+      }
+      
+      setMessage(errorMsg); 
+    }
+  };
+
+  const toggleMode = () => {
+    setIsLogin(!isLogin);
+    setMessage(""); 
+    setIsError(false);
+  };
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
+    <div className="mobile-view">
+      <h1>{isLogin ? "Welcome Back" : "Create Account"}</h1>
+      
+      <form onSubmit={handleSubmit} className="auth-form">
+        <input 
+          type="text" 
+          placeholder="Username" 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)} 
+          required
         />
-        <button type="submit">Greet</button>
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)} 
+          required
+        />
+        <button type="submit">
+          {isLogin ? "Log In" : "Sign Up"}
+        </button>
       </form>
-      <p>{greetMsg}</p>
-    </main>
+
+      {/* Conditionally apply the error or success CSS class */}
+      {message && (
+        <p className={`status-message ${isError ? 'error-text' : 'success-text'}`}>
+          {message}
+        </p>
+      )}
+
+      <div className="toggle-container">
+        <p>{isLogin ? "Don't have an account?" : "Already have an account?"}</p>
+        <button className="toggle-btn" type="button" onClick={toggleMode}>
+          {isLogin ? "Register here" : "Authenticate here"}
+        </button>
+      </div>
+    </div>
   );
 }
 

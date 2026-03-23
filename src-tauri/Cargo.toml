@@ -2,7 +2,7 @@
 name = "asim-desktop"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Kar1na"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -24,5 +24,9 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 aws-sdk-dynamodb = "1.110.0"
 aws-config = "1.8.15"
-tokio = "1.50.0"
+tokio = { version = "1.50.0", features = ["rt", "macros"] }
+tracing-subscriber = "0.3.23"
+tracing = "0.1.44"
+rand = { version = "0.10.0", features = ["thread_rng"] }
+sha2 = "0.10.9"
 
