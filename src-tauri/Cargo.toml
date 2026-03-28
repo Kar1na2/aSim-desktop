@@ -29,4 +29,6 @@ tracing-subscriber = "0.3.23"
 tracing = "0.1.44"
 rand = { version = "0.10.0", features = ["thread_rng"] }
 sha2 = "0.10.9"
+uuid = { version = "1.22.0", features = ["v4"] }
+chrono = { version = "0.4.44", features = ["serde"] } 
 
